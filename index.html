@@ -128,7 +128,7 @@
     <span>MaisControl Mobile</span>
   </div>
   <h1>Política de Privacidade</h1>
-  <div class="atualizado">Última atualização: 15 de maio de 2026</div>
+  <div class="atualizado">Última atualização: 5 de novembro de 2026</div>
 </header>
 
 <main class="container">
@@ -170,19 +170,46 @@
   <ul>
     <li><strong>Registros de abastecimento</strong> — placa, odômetro, volume, valor,
       combustível, frentista, motorista, NF-e (quando externo).</li>
-    <li><strong>Fotos opcionais</strong> — odômetro, veículo, comprovante/NF-e. Ficam no
-      aparelho e podem ser enviadas para o servidor da sua empresa.</li>
+    <li><strong>Fotos opcionais</strong> — odômetro, veículo, comprovante/NF-e e itens de
+      inspeção. Ficam no aparelho e podem ser enviadas para o servidor.</li>
+    <li><strong>Almoxarifado e inspeções</strong> — solicitações e retiradas de produtos,
+      respostas dos checklists e visto do encarregado.</li>
     <li><strong>Dados do equipamento</strong> — TAGs NFC lidas, número de bico, dados da bomba
       (concentrador Companytec).</li>
-    <li><strong>Dados técnicos do dispositivo</strong> — modelo, versão do sistema operacional,
-      identificador anônimo de instalação (apenas para diagnóstico de erros).</li>
+    <li><strong>Dados técnicos do dispositivo</strong> — fabricante e modelo, versão do sistema
+      operacional, versão do app e um identificador gerado pelo próprio app na instalação. Eles
+      acompanham as requisições e ficam registrados junto dos lançamentos, para mostrar de qual
+      aparelho veio cada um (auditoria).</li>
+    <li><strong>Token de notificações</strong> — identifica o aparelho para o envio de avisos e é
+      apagado do nosso servidor ao tocar em "Sair".</li>
   </ul>
 
-  <h3>2.3 O que NÃO coletamos</h3>
+  <h3>2.3 Comando de voz</h3>
+  <p>
+    O microfone só é usado depois que você toca no botão de voz da tela "Liberar abastecimento".
+    <strong>O app não grava nem guarda o áudio.</strong> A conversão de voz em texto é feita pelo
+    serviço de reconhecimento de voz do sistema do aparelho (Google no Android, Apple no iOS), que
+    pode processar o áudio fora do aparelho. O texto reconhecido serve para preencher o formulário,
+    e a bomba só é liberada depois da sua confirmação por toque.
+  </p>
+
+  <h3>2.4 Petros, consultor de diesel</h3>
+  <p>
+    Quando disponível para o seu usuário, o Petros responde perguntas sobre a operação usando
+    inteligência artificial. Suas perguntas, seu primeiro nome e os dados da operação necessários
+    para a resposta (que podem incluir placas e nomes de frentistas ou motoristas) são enviados à
+    Anthropic, que fornece o modelo de IA. As conversas ficam guardadas no nosso servidor por até
+    <strong>180 dias</strong>, e você pode pedir a exclusão antes disso (item 6). Não use o Petros se não quiser
+    esse tratamento: o restante do app funciona sem ele.
+  </p>
+
+  <h3>2.5 O que NÃO coletamos</h3>
   <ul>
-    <li>Localização / GPS — o app não acessa a localização do dispositivo, nem aproximada nem contínua, e não solicita essa permissão.</li>
+    <li>Localização / GPS — o app não registra nem envia a sua localização. A permissão de
+      localização pode ser pedida somente porque o Android e o iOS a exigem para informar o nome da
+      rede Wi-Fi na conferência da conexão com o concentrador.</li>
     <li>Contatos, mensagens ou fotos da galeria que você não selecionar explicitamente.</li>
-    <li>Microfone, histórico de navegação ou dados de outros apps.</li>
+    <li>Gravações de voz, histórico de navegação ou dados de outros apps.</li>
     <li>Identificadores publicitários (o app não exibe nem comercializa anúncios).</li>
   </ul>
 
@@ -207,9 +234,13 @@
     <li><strong>A empresa contratante (sua empregadora)</strong> — ela tem acesso completo aos
       dados gerados durante o uso do app, pois é a "controladora" dos dados nos termos da LGPD.
       Cada empresa só vê os próprios dados.</li>
-    <li><strong>Provedores de infraestrutura</strong> — usamos servidores em nuvem para hospedar
-      o backend (Amazon Web Services / similar). Esses provedores têm contratos de processamento
-      de dados em conformidade com a LGPD.</li>
+    <li><strong>Provedores de infraestrutura</strong> — que hospedam o backend.</li>
+    <li><strong>Anthropic</strong> (Estados Unidos) — processa as conversas com o Petros
+      (item 2.4), o que envolve transferência internacional de dados.</li>
+    <li><strong>Google e Apple</strong> — reconhecimento de voz (item 2.3) e entrega de
+      notificações (FCM e APNs).</li>
+    <li><strong>Expo</strong> — envio de notificações e entrega de atualizações do app.</li>
+    <li><strong>BrasilAPI</strong> — consulta de CNPJ e CEP ao cadastrar parceiros.</li>
     <li><strong>Autoridades públicas</strong> — quando exigido por lei, ordem judicial ou
       obrigação regulatória.</li>
   </ul>
@@ -222,6 +253,8 @@
       brasileira.</li>
     <li>Credenciais salvas localmente no aparelho (para "Manter conectado") expiram
       automaticamente em <strong>7 dias</strong> sem uso, ou imediatamente ao tocar em "Sair".</li>
+    <li>Conversas com o Petros ficam guardadas por até <strong>180 dias</strong>.</li>
+    <li>Áudio do comando de voz não é guardado pelo app.</li>
   </ul>
 
   <h2>6. Seus direitos (LGPD)</h2>
@@ -242,7 +275,8 @@
 
   <h2>7. Segurança</h2>
   <ul>
-    <li>Comunicação cliente-servidor sempre por <strong>HTTPS</strong> (TLS 1.2+).</li>
+    <li>Comunicação com o servidor sempre por <strong>HTTPS</strong> (TLS 1.2+). A conexão com o
+      concentrador na rede local do posto não passa pela internet e não usa HTTPS.</li>
     <li>Senhas armazenadas com algoritmo de hash criptográfico (BCrypt).</li>
     <li>Credenciais salvas localmente cifradas via Keychain (iOS) ou EncryptedSharedPreferences
       (Android Keystore).</li>
@@ -272,6 +306,8 @@
       <tr><td><strong>Galeria de fotos</strong></td><td>Anexar comprovantes existentes</td><td>Opcional</td></tr>
       <tr><td><strong>NFC</strong></td><td>Ler tags de veículos/frentistas/motoristas</td><td>Recomendada</td></tr>
       <tr><td><strong>Wi-Fi / Rede local</strong></td><td>Conectar ao concentrador Companytec via TCP local</td><td>Sim (para automação)</td></tr>
+      <tr><td><strong>Microfone e reconhecimento de voz</strong></td><td>Preencher a liberação de abastecimento por voz, só depois de tocar no botão de voz</td><td>Opcional</td></tr>
+      <tr><td><strong>Localização</strong></td><td>Somente para o sistema informar o nome da rede Wi-Fi na conferência da conexão com o concentrador; a localização não é registrada nem enviada</td><td>Opcional</td></tr>
       <tr><td><strong>Notificações</strong></td><td>Avisar de novidades e alertas operacionais</td><td>Opcional</td></tr>
       <tr><td><strong>Armazenamento seguro</strong></td><td>Salvar credenciais cifradas (apenas se você ativar "Manter conectado")</td><td>Opcional</td></tr>
     </tbody>
